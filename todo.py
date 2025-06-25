@@ -7,10 +7,11 @@ def display_menu(fresh_start:int):
     print("1. Add New Task")
     print("2. Remove Task")
     print("3. View Tasks")
-    print("4. Exit")
+    print("4. Reorder Tasks")
+    print("5. Exit")
 
     try:
-        action = int(input("Please select an option (1-4):"))
+        action = int(input("Please select an option (1-5):"))
 
         if action == 1:
             add_task()
@@ -19,6 +20,8 @@ def display_menu(fresh_start:int):
         elif action == 3:
             view_tasks(1)
         elif action == 4:
+            reorder_task()
+        elif action == 5:
             exit()
         else:
             print("Invalid selection.")
@@ -73,6 +76,39 @@ def remove_task():
                         print(f"Task '{removed_task}' has been removed.")
         except ValueError:
             print("Invalid selection.")
+
+def reorder_task():
+    print("You selected: Reorder Tasks")
+    # send any value other than 1, 1 means reading, other than 1 means reading for remove action
+    tasks_data = view_tasks(0)
+    no_error = tasks_data[0]
+    task_count = tasks_data[1]
+    tasks = tasks_data[2]
+
+    if no_error:
+        task_sequence = input("Please enter comma separated task numbers as per the sequence: ")
+        task_sequence = task_sequence.split(',')
+        # considered user entered correct numbers
+        int_task_sequence = [int(sequence) for sequence in task_sequence]
+
+        is_valid_format = True
+        if len(task_sequence) != task_count:
+            is_valid_format = False
+        else:
+            for sequence in int_task_sequence:
+                if sequence <= 0 or sequence > task_count:
+                    is_valid_format = False
+                    break
+
+        if is_valid_format:
+            updated_task_list = [tasks[i-1] for i in int_task_sequence]
+            with open(TASK_FILE_NAME, "wt") as task_file:
+                for task in updated_task_list:
+                    task_file.write(task + "\n")
+                else:
+                    print("Tasks have been reordered.")
+        else:
+            print("Invalid format.")
 
 def view_tasks(read_mode:int) -> list | None:
     if read_mode == 1:

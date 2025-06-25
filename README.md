@@ -36,3 +36,8 @@ when we execute the command python todo.py in terminal, we get
    - User is asked to mention the task number.
    - Invalid input will not do anything.
    - Valid input will delete the task and update the file by opening it in write mode and will display the message accordingly.
+
+## Extras (Not included in task) ##
+
+1. To edit a task, we can remove it and add it again in list via console. If sequence matters, then another way is to mention updated task at any index and update as it is done in remove item via list data type.
+2. For sorting, use another list to perform the sorting and get the updated list.
