@@ -27,7 +27,7 @@ def display_menu(fresh_start:int):
         print("Invalid selection.")
         display_menu(0)
 
-def is_duplicate_entry(task: str) -> bool:
+def is_duplicate_entry(task: str) -> bool | None:
     try:
         with open(TASK_FILE_NAME, "r") as task_file:
             # returns list
@@ -38,6 +38,7 @@ def is_duplicate_entry(task: str) -> bool:
         return False
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        exit()
 
 def add_task():
     print("You selected: Add New Task")
